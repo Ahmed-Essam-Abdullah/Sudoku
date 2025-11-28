@@ -4,6 +4,7 @@
  */
 package Sudoku;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,13 +15,14 @@ import java.util.List;
  */
 public class RowChecker implements Runnable{
     private int[][] board;
-    private List<String> errors;
-            
+    private ArrayList <String>  errors;
+    private boolean valid;   
    
 
-    public RowChecker(int[][] board,List <String> errors) {
+    public RowChecker(int[][] board,ArrayList <String>  errors) {
         this.board = board;
         this.errors = errors;
+        this.valid=true;  
     } 
     @Override
     public void run() {
@@ -35,8 +37,8 @@ public class RowChecker implements Runnable{
         {
         if(freq[i]>1)
         {synchronized (System.out) {
-            
-                System.out.println("Row "+(row+1)+" value "+i+" repeated "+freq[i] +"times");
+              this.valid=false;  
+                errors.add("Row "+(row+1)+" value "+i+" repeated "+freq[i] +"times");
             }}
         }
         
@@ -45,6 +47,10 @@ public class RowChecker implements Runnable{
         
         
         }
+    }
+
+    public boolean isValid() {
+        return valid;
     }
     
     

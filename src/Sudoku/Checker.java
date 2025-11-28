@@ -4,13 +4,9 @@
  */
 package Sudoku;
 
-/**
- *
- * @author AliAl
- */
+
 public interface Checker {
 
-    public static void check(int[][] board) {
-    }
+    public  void check(int[][] board) ;
 
 }
