@@ -1,4 +1,17 @@
-public static void main(String[] args) {
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Sudoku;
+
+import java.util.Arrays;
+
+/**
+ *
+ * @author AliAl
+ */
+public class Main {
+    public static void main(String[] args) {
     String fileName = "src/resources/sudoku.csv";
     int[][] board=null;
     try{
@@ -11,5 +24,7 @@ public static void main(String[] args) {
         System.err.println("Error loading Sudoku puzzle: " + e.getMessage());
         e.printStackTrace();
     }
-    Checker.check(board);
+    Checker1thread.check(board);
+}
+    
 }

@@ -1,0 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Sudoku;
+
+/**
+ *
+ * @author AliAl
+ */
+public class Checker3threads implements Checker{
+        public static void check(int[][] board) {
+        }
+    
+}
