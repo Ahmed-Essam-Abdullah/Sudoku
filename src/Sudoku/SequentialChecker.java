@@ -1,8 +1,9 @@
+package Sudoku;
 import java.util.ArrayList;
 
-public class Checker {
-
-    public static void check(int[][] board) {
+public class SequentialChecker implements Checker{
+    
+    public  void check(int[][] board) {
         boolean VALID= true;
         for (int row = 0; row < board.length; row++) {
             boolean valid = true;
