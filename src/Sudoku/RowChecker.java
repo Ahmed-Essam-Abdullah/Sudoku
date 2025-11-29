@@ -16,17 +16,19 @@ import java.util.List;
 public class RowChecker implements Runnable{
     private int[][] board;
     private ArrayList <String>  errors;
-    private boolean valid;   
+    private boolean valid;
+    private int row;
    
 
-    public RowChecker(int[][] board,ArrayList <String>  errors) {
+    public RowChecker(int[][] board,ArrayList <String>  errors,int row) {
         this.board = board;
         this.errors = errors;
-        this.valid=true;  
+        this.valid=true; 
+        this.row=row;
     } 
     @Override
    public void run() {
-        for (int row = 0; row < 9; row++) {
+        
             ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
             for (int i = 0; i < 10; i++) 
             {duplicates.add(new ArrayList<>());}
@@ -38,9 +40,6 @@ public class RowChecker implements Runnable{
                         duplicates.get(board[row][col]).add(col+1);
                     }
                 
-                
-
-
                 for (int i = 1; i <= 9; i++) {
                     ArrayList<Integer> vArrayList = duplicates.get(i);
                     if (vArrayList.size() > 1) {
@@ -52,8 +51,6 @@ public class RowChecker implements Runnable{
                         }
                     }
                 }
-
-            }
         }
     public boolean isValid() {
         return valid;

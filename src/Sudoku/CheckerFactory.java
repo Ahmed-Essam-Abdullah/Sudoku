@@ -14,6 +14,8 @@ public class CheckerFactory {
         return new SequentialChecker();
     else if (mode.equals("3"))
        {return new ThreeThreadChecker();}
+     else if (mode.equals("27"))
+            return new TwentySevenThreadChecker();
     
     return null;
     }
