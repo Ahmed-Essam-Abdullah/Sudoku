@@ -8,16 +8,17 @@ public class ColumnChecker implements Runnable {
     private int[][] board;
     private ArrayList<String> errors;
     private boolean valid;
+    private int col;
 
-    public ColumnChecker(int[][] board, ArrayList<String> errors) {
+    public ColumnChecker(int[][] board, ArrayList<String> errors,int col) {
         this.board = board;
         this.errors = errors;
         this.valid = true;
+        this.col=col;
     }
 
     @Override
     public void run() {
-        for (int col = 0; col < 9; col++) {
             ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
             for (int i = 0; i < 10; i++) 
             {duplicates.add(new ArrayList<>());}
@@ -43,8 +44,6 @@ public class ColumnChecker implements Runnable {
                         }
                     }
                 }
-
-            }
         }
 
     
