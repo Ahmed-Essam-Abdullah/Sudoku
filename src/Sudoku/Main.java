@@ -24,7 +24,9 @@ public class Main {
         System.err.println("Error loading Sudoku puzzle: " + e.getMessage());
         e.printStackTrace();
     }
-    Checker1thread.check(board);
+    CheckerFactory checkerFactory=new CheckerFactory();
+     Checker checker=checkerFactory.createChecker("0");
+    checker.check(board);
 }
     
 }

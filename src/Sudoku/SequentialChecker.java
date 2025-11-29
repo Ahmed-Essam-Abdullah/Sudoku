@@ -1,7 +1,7 @@
 package Sudoku;
 import java.util.ArrayList;
 
-public class Checker1thread implements Checker{
+public class SequentialChecker implements Checker{
     
     public  void check(int[][] board) {
         boolean VALID= true;

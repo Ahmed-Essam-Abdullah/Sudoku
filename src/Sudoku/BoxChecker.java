@@ -11,33 +11,47 @@ import static javax.management.Query.value;
 public class BoxChecker implements Runnable {
 
     private int[][] board;
-    private ArrayList <String>  errors;
+    private ArrayList<String> errors;
     private boolean valid;
-    public BoxChecker(int[][] board, ArrayList <String>  errors) {
+
+    public BoxChecker(int[][] board, ArrayList<String> errors) {
         this.board = board;
         this.errors = errors;
-         this.valid=true;
+        this.valid = true;
+
     }
 
     @Override
     public void run() {
+
+        int box = 0;
         for (int rowbox = 0; rowbox <= 6; rowbox += 3) {
             for (int colbox = 0; colbox <= 6; colbox += 3) {
-                 int[] freq = new int[10];
+                box++;
+                ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
+                for (int i = 0; i < 10; i++) {
+                    duplicates.add(new ArrayList<>());
+                }
                 for (int row = 0; row < 3; row++) {
                     for (int col = 0; col < 3; col++) {
-                        freq[board[row+rowbox][col+colbox]]++;
+                        if (board[row + rowbox][col + colbox] < 1) {
+                            System.out.println("Invalid number" + board[row + rowbox][col + colbox]);
+                            continue;
+                        }
+                        duplicates.get(board[row + rowbox][col + colbox]).add((row * 3 + col + 1));
                     }
+                }
 
-                    for (int i = 1; i <= 9; i++) {
-                        if (freq[i] > 1) {
-                            synchronized (errors) {
-                                
-                               errors.add("Row "+(((i-1)/3)+1)+"Column "+(((i-1)%3)+1)+" value "+i+" repeated "+freq[i] +"times");
-                            }
+                for (int i = 1; i <= 9; i++) {
+                    ArrayList<Integer> vArrayList = duplicates.get(i);
+                    if (vArrayList.size() > 1) {
+                       if(valid)
+                           valid=false;
+                        synchronized (errors) {
+
+                            errors.add("Box: " + box + " value " + i + " repeated " + vArrayList.toString() + " .");
                         }
                     }
-
                 }
             }
         }

@@ -10,11 +10,11 @@ import java.util.ArrayList;
  *
  * @author AliAl
  */
-public class Checker3threads implements Checker {
+public class ThreeThreadChecker implements Checker {
 
     private ArrayList<String> errors;
 
-    public Checker3threads() {
+    public ThreeThreadChecker() {
         this.errors = new ArrayList<String>();
     }
 

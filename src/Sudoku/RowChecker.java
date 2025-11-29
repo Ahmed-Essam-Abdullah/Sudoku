@@ -25,30 +25,36 @@ public class RowChecker implements Runnable{
         this.valid=true;  
     } 
     @Override
-    public void run() {
-        for(int row=0;row<9;row++){
-        int [] freq=new int[10];
-        for(int col=0;col<9;col++)
-        {
-        freq[board[row][col]]++;
-        }
-        
-      for(int i=1;i<=9;i++)
-        {
-        if(freq[i]>1)
-        {synchronized (System.out) {
-              this.valid=false;  
-                errors.add("Row "+(row+1)+" value "+i+" repeated "+freq[i] +"times");
-            }}
-        }
-        
-        
-        
-        
-        
-        }
-    }
+   public void run() {
+        for (int row = 0; row < 9; row++) {
+            ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
+            for (int i = 0; i < 10; i++) 
+            {duplicates.add(new ArrayList<>());}
+                for (int col = 0; col < 9; col++) {
+                if (board[row][col] < 1) {
+                            System.out.println("Invalid number" + board[row][col]);
+                            continue;
+                        }
+                        duplicates.get(board[row][col]).add(col+1);
+                    }
+                
+                
 
+
+                for (int i = 1; i <= 9; i++) {
+                    ArrayList<Integer> vArrayList = duplicates.get(i);
+                    if (vArrayList.size() > 1) {
+                       if(valid)
+                           valid=false;
+                        synchronized (errors) {
+
+                            errors.add("Row: " + row + " value " + i + " repeated " + vArrayList.toString() + " .");
+                        }
+                    }
+                }
+
+            }
+        }
     public boolean isValid() {
         return valid;
     }
