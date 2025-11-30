@@ -12,7 +12,13 @@ import java.util.Arrays;
  */
 public class Main {
     public static void main(String[] args) {
-    String fileName = "src/resources/sudoku.csv";
+        if(args.length<2){
+            System.out.println("write correct command");
+            System.exit(1);
+        }
+        
+    String fileName = args[0];
+    String mode=args[1];
     int[][] board=null;
     try{
         board = SudokuLoader.readSudokuCsv(fileName);
@@ -25,7 +31,7 @@ public class Main {
         e.printStackTrace();
     }
     CheckerFactory checkerFactory=new CheckerFactory();
-     Checker checker=checkerFactory.createChecker("0");
+     Checker checker=checkerFactory.createChecker(mode);
     checker.check(board);
 }
     
