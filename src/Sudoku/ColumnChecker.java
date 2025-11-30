@@ -40,7 +40,9 @@ public class ColumnChecker implements Runnable {
                            valid=false;
                         synchronized (errors) {
 
-                            errors.add("Column: " + col + " value " + i + " repeated " + vArrayList.toString() + " .");
+                            errors.add("Column: " + col + 
+                                " has invalid value " + i +
+                                " at position " + vArrayList.toString() + " .");
                         }
                     }
                 }
