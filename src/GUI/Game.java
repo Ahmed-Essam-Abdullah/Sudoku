@@ -95,6 +95,7 @@ public class Game extends javax.swing.JPanel {
             selectedcell.setText(number);
             selectedcell.requestFocus();
         }
+        view.saveChanges(boradData);
 
     }
 
@@ -114,6 +115,7 @@ public class Game extends javax.swing.JPanel {
                 }
             }
         }
+             view.saveChanges(boradData);
     }
 
     private int[][] getBoard() {
@@ -152,8 +154,8 @@ public class Game extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         SolveButton = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
 
         setAlignmentX(0.0F);
         setAlignmentY(0.0F);
@@ -164,14 +166,14 @@ public class Game extends javax.swing.JPanel {
         Sudokutable.setLayout(SudokutableLayout);
         SudokutableLayout.setHorizontalGroup(
             SudokutableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
         SudokutableLayout.setVerticalGroup(
             SudokutableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 240, Short.MAX_VALUE)
         );
 
-        add(Sudokutable, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 10, 420, 240));
+        add(Sudokutable, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 310, 240));
         Sudokutable.getAccessibleContext().setAccessibleName("");
 
         jButton1.setText("1");
@@ -280,14 +282,14 @@ public class Game extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jButton1.getAccessibleContext().setAccessibleName("jButton1");
         jButton2.getAccessibleContext().setAccessibleName("jButton2");
         jButton3.getAccessibleContext().setAccessibleName("jButton3");
 
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 150, 120));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 150, 130));
 
         SolveButton.setBackground(new java.awt.Color(0, 204, 0));
         SolveButton.setText("Solve");
@@ -306,6 +308,14 @@ public class Game extends javax.swing.JPanel {
         });
         jPanel1.add(jButton10);
 
+        jButton12.setText("Verify");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton12);
+
         jButton11.setBackground(new java.awt.Color(232, 22, 22));
         jButton11.setText("Exit");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
@@ -314,14 +324,6 @@ public class Game extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jButton11);
-
-        jButton12.setText("Verify");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton12);
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
@@ -378,11 +380,17 @@ public class Game extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void SolveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SolveButtonActionPerformed
+                int[][] currentBoard = getBoard();
         try {
-            int[][] currentBoard = getBoard();
+         if (currentBoard == null) {
+            JOptionPane.showMessageDialog(jPanel1, "Please fill in more cells before solve!");
+            return;
+        }
+      
             int[][] solvedBoard = view.solveGame(currentBoard);
             loadGame(solvedBoard); 
             JOptionPane.showMessageDialog(this, "Puzzle Solved Successfully!");
+            view.finishGame(boradData);
             
         } catch (InvalidGame ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -391,16 +399,17 @@ public class Game extends javax.swing.JPanel {
     }//GEN-LAST:event_SolveButtonActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-             JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
+            JFrame topFrame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
             topFrame.setContentPane(new Home()); 
             topFrame.revalidate();
             topFrame.repaint();
+            view.finishGame(boradData);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         int[][] board = getBoard();
         if (board == null) {
-            JOptionPane.showMessageDialog(jPanel1, "Please fill in more cells before verifying!");
+            JOptionPane.showMessageDialog(this, "Please fill in more cells before verifying!");
             return;
         }
         boolean[][] result = view.verifyGame(board);

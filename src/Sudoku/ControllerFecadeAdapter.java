@@ -52,7 +52,8 @@ public class ControllerFecadeAdapter implements Controllable {
     public void driveGames(String sourcePath) throws SolutionInvalidException {
         try {
             storage.StorageManager storage = new StorageManager();
-            int[][] board = ( storage.loadGame(sourcePath)).getBoard();
+
+            int[][] board = ( storage.loadRawBoard(sourcePath)).getBoard();
             Game game = new Game(board);
             controllerFacade.driveGames(game);
         } catch (IOException e) {
@@ -121,4 +122,20 @@ public class ControllerFecadeAdapter implements Controllable {
  catch (IOException e)
        {          throw new IIOException("Can't save logs :" + e.getMessage());}
     }
+public  int[][] checkGames() {
+ Game game=controllerFacade.checkGames();
+     if(game==null)
+         return null;
+     return game.getBoard();
+ 
+ }
+ public void saveChanges(int [][] board) 
+ {
+     controllerFacade.saveChanges(new Game(board));
+
+ }
+  public void finishGame(int [][] board) 
+  { 
+    controllerFacade.finishGame(new Game(board));
+ }
 }

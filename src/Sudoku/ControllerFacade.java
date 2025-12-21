@@ -36,10 +36,18 @@ public class ControllerFacade implements Viewable {
 
     public  Game getGame(DifficultyEnum level) throws NotFoundException {
         try {
+               try{ 
+                   Game g=storage.loadGame(storage.getSavedPath());
+                driveGames(g);
+               }
+            catch(SolutionInvalidException | IOException e){}
+           
             String folderPath;
+    
             switch (level) {
                 case EASY:
                     folderPath = storage.getEasyPath();
+                 
                     break;
                 case MEDIUM:
                     folderPath = storage.getMediumPath();
@@ -55,19 +63,23 @@ public class ControllerFacade implements Viewable {
 
         } catch (IOException e) {
             throw new NotFoundException("Games not Found");
+           
         }
 
     }
 
     public  void driveGames(Game sourceGame) throws SolutionInvalidException {
+    
         if (!SudokuVerifier.isValidAndComplete(sourceGame.getBoard())) {
             throw new SolutionInvalidException("The path provided does not contain a complete and correct Sudoku solution.");
         }
         int[][] easy = new int[9][9];
         int[][] medium = new int[9][9];
         int[][] hard = new int[9][9];
+       
        GameGenerator.generateAll(sourceGame.getBoard(), easy, medium, hard);
        try{
+            
        storage.saveGame(storage.getEasyPath(), new Game(easy));
         storage.saveGame(storage.getMediumPath(), new Game(medium));
         storage.saveGame(storage.getHardPath(), new Game(hard));}
@@ -118,4 +130,24 @@ CascadeSolution[index++]=solutionMoves[i][2];
        catch (IOException e)
        {          throw new IIOException("Can't save logs :" + e.getMessage());}
     }
+ public  Game checkGames() {
+ try {Game g=storage.loadCurrentGame();
+ return g;}
+ catch(IOException e)
+ {return null;}
+     
+ 
+ }
+ public void saveChanges(Game game) 
+ { try{
+     storage.saveCurrentGame(game);}
+ catch(IOException e)
+     {return;}
+ }
+  public void finishGame(Game game) 
+ { try{
+     storage.clearCurrentGame();}
+ catch(IOException e)
+     {return;}
+ }
 }

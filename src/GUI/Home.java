@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import Sudoku.View;
 
 import javax.swing.JFrame;
 
@@ -33,7 +34,8 @@ public class Home extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPane1 = new javax.swing.JTextPane();
 
-        jButton1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tempus Sans ITC", 3, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 204, 51));
         jButton1.setText("Play");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -41,7 +43,8 @@ public class Home extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tempus Sans ITC", 3, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 51, 0));
         jButton2.setText("Exit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,8 +53,11 @@ public class Home extends javax.swing.JPanel {
         });
 
         jTextPane1.setEditable(false);
+        jTextPane1.setBackground(new java.awt.Color(255, 153, 0));
         jTextPane1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 24)); // NOI18N
-        jTextPane1.setText("Sudoku");
+        jTextPane1.setForeground(new java.awt.Color(0, 0, 102));
+        jTextPane1.setText("Test your Brain!");
+        jTextPane1.setToolTipText("");
         jScrollPane1.setViewportView(jTextPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -59,26 +65,25 @@ public class Home extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(78, 78, 78))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(123, 123, 123)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(15, 15, 15)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(154, Short.MAX_VALUE))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -93,11 +98,31 @@ int choice = javax.swing.JOptionPane.showConfirmDialog(this,
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame mainContainer = (JFrame) this.getTopLevelAncestor();
+View view=new View();
+int [][]board=view.checkGames();
+if(board!=null){
+int choice = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "Are you sure you want to contniue?", 
+            "contniue Game", 
+            javax.swing.JOptionPane.YES_NO_OPTION);
+    if (choice == javax.swing.JOptionPane.YES_OPTION) {
+        { JFrame mainContainer = (JFrame) this.getTopLevelAncestor();
+        mainContainer.getContentPane().removeAll();
+        mainContainer.setContentPane(new Game(board));
+        mainContainer.revalidate();
+        mainContainer.repaint();}
+    }
+return;}
+
+   JFrame mainContainer = (JFrame) this.getTopLevelAncestor();
         mainContainer.getContentPane().removeAll();
         mainContainer.setContentPane(new GameLevels());
         mainContainer.revalidate();
         mainContainer.repaint();
+
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

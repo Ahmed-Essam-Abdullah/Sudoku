@@ -43,5 +43,17 @@ public class View implements Controllable{
     @Override
     public void logUserAction(UserAction userAction) throws IOException{
     controllerFecadeAdapter.logUserAction(userAction);}
-    
+    public  int[][] checkGames() {
+ int [][] board=controllerFecadeAdapter.checkGames();
+    return board;
+ 
+ }
+     public void saveChanges(int [][] board) 
+ {
+    controllerFecadeAdapter.saveChanges(board);
+ }
+  public void finishGame(int [][] board) 
+  { 
+    controllerFecadeAdapter.finishGame(board);
+ }
 }
