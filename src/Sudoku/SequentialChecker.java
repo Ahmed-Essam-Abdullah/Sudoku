@@ -1,112 +1,90 @@
 package Sudoku;
+
 import java.util.ArrayList;
 
-public class SequentialChecker implements Checker{
-    
-    public  void check(int[][] board) {
-        boolean VALID= true;
-        for (int row = 0; row < board.length; row++) {
-            boolean valid = true;
-            ArrayList<Integer> seen = new ArrayList<>();
-            ArrayList<Integer> invalidCols = new ArrayList<>();
+public class SequentialChecker implements Checker {
 
-            for (int col = 0; col < board[0].length; col++) {
+    @Override
+    public void check(int[][] board) {
+        boolean valid = true;
+        ArrayList<String> errors = new ArrayList<>();
+
+        // Here we check the list
+        for (int row = 0; row < 9; row++) {
+            ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
+            for (int i = 0; i <= 9; i++) duplicates.add(new ArrayList<>());
+
+            for (int col = 0; col < 9; col++) {
                 int val = board[row][col];
-                if (val == 0) continue;
-
-                if (seen.contains(val)) {
-                    invalidCols.add(col + 1);
-                    valid = false;
-                    VALID= false;
-                } else {
-                    seen.add(val);
-                }
+                if (val < 1 || val > 9) continue;
+                duplicates.get(val).add(col + 1);  // here I put every index of the variable in its array list
             }
-            if (!valid) {
-                System.out.print("ROW " + (row + 1) + ", #1, [");
-                for (int i = 0; i < invalidCols.size(); i++) {
-                    System.out.print(invalidCols.get(i));
-                    if (i != invalidCols.size() - 1) System.out.print(", ");
+
+            for (int val = 1; val <= 9; val++) {
+                ArrayList<Integer> positions = duplicates.get(val);
+                if (positions.size() > 1) {
+                    errors.add("Row " + (row + 1) + ", value " + val + ": " + positions);
+                    valid = false;
                 }
-                System.out.println("]");
             }
         }
 
-        for (int col = 0; col < board[0].length; col++) {
-            boolean valid = true;
-            ArrayList<Integer> seen = new ArrayList<>();
-            ArrayList<Integer> invalidRows = new ArrayList<>();
+        //Here we check the columns
+        for (int col = 0; col < 9; col++) {
+            ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
+            for (int i = 0; i <= 9; i++) duplicates.add(new ArrayList<>());
 
-            for (int row = 0; row < board.length; row++) {
+            for (int row = 0; row < 9; row++) {
                 int val = board[row][col];
-                if (val == 0) continue;
+                if (val < 1 || val > 9) continue;
+                duplicates.get(val).add(row + 1);
+            }
 
-                if (seen.contains(val)) {
-                    invalidRows.add(row + 1);
+            for (int val = 1; val <= 9; val++) {
+                ArrayList<Integer> positions = duplicates.get(val);
+                if (positions.size() > 1) {
+                    errors.add("Column " + (col + 1) + ", value " + val + ": " + positions);
                     valid = false;
-                    VALID= false;
-                } else {
-                    seen.add(val);
                 }
-            }
-
-            if (!valid) {
-                System.out.print("COL " + (col + 1) + ", #1, [");
-                for (int i = 0; i < invalidRows.size(); i++) {
-                    System.out.print(invalidRows.get(i));
-                    if (i != invalidRows.size() - 1) System.out.print(", ");
-                }
-                System.out.println("]");
             }
         }
-        for (int boxRow = 0; boxRow < 3; boxRow++) {
-            for (int boxCol = 0; boxCol < 3; boxCol++) {
 
-                boolean valid = true;
-                ArrayList<Integer> seen = new ArrayList<>();
-                ArrayList<Integer> invalidCells = new ArrayList<>();
-                int startRow = boxRow * 3;
-                int startCol = boxCol * 3;
+        //  Here we Check the boxes
+        for (int box = 0; box < 9; box++) {
+            int startRow = (box / 3) * 3;
+            int startCol = (box % 3) * 3;
 
-                //startRow = 0
-                // starCol= 0
+            ArrayList<ArrayList<Integer>> duplicates = new ArrayList<>();
+            for (int i = 0; i <= 9; i++) duplicates.add(new ArrayList<>());
 
-                for (int i = 0; i < 3; i++) {
-                    int k=0;
-                    for (int j = 0; j < 3; j++) {
-                        int row = startRow + i;
-                        int col = startCol + j;
-                        int val = board[row][col];
-
-                        if (val == 0) continue;
-                        int cellIndex = i * 3 + j + 1;
-
-                        if (seen.contains(val)) {
-                            invalidCells.add(cellIndex);
-                            valid = false;
-                            VALID= false;
-                        } else {
-                            seen.add(val);
-                        }
-                        k+=3;
+            int pos = 1;
+            for (int r = 0; r < 3; r++) {
+                for (int c = 0; c < 3; c++) {
+                    int val = board[startRow + r][startCol + c];
+                    if (val >= 1 && val <= 9) {
+                        duplicates.get(val).add(pos);
                     }
+                    pos++;
                 }
-                if (!valid) {
-                    System.out.print("BOX " + ((boxRow * 3 + boxCol + 1)) + ", #1, [");
-                    for (int k = 0; k < invalidCells.size(); k++) {
-                        System.out.print(invalidCells.get(k));
-                        if (k != invalidCells.size() - 1) System.out.print(", ");
-                    }
-                    System.out.println("]");
-                }
+            }
 
+            for (int val = 1; val <= 9; val++) {
+                ArrayList<Integer> positions = duplicates.get(val);
+                if (positions.size() > 1) {
+                    errors.add("Box " + (box + 1) + ", value " + val + ": " + positions);
+                    valid = false;
+                }
             }
         }
-        if(VALID){
+
+        // Printing our results
+        if (valid) {
             System.out.println("VALID");
-        }
-        else{
+        } else {
+            for (String e : errors) {
+                System.out.println(e);
+            }
             System.out.println("INVALID");
         }
-}
+    }
 }

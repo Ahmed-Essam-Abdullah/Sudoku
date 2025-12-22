@@ -39,19 +39,19 @@ public class ThreeThreadChecker implements Checker {
         rowThread.start();
         columnThread.start();
         BoxThread.start();
-   try{
-        rowThread.join();
-        columnThread.join();
-        BoxThread.join();}
-   catch(InterruptedException e)
-   {System.out.println(e);}
+        try{
+            rowThread.join();
+            columnThread.join();
+            BoxThread.join();}
+        catch(InterruptedException e)
+        {System.out.println(e);}
         if (errors.isEmpty()) {
             System.out.println("Valid");
         } else {System.out.println("InValid");
-        for(String error :this.errors)
-        {
-            System.out.println(error);
-        }
+            for(String error :this.errors)
+            {
+                System.out.println(error);
+            }
         }
     }
 

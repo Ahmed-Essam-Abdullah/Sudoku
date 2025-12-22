@@ -12,13 +12,13 @@ import java.util.ArrayList;
  */
 public class TwentySevenThreadChecker implements Checker{
     private final ArrayList<String> errors;
-    
+
     public TwentySevenThreadChecker() {
         this.errors = new ArrayList<>();
     }
-    
+
     @Override
-     public void check(int[][] board) {
+    public void check(int[][] board) {
 
         ArrayList<Thread> threads = new ArrayList<>();
 
@@ -54,5 +54,5 @@ public class TwentySevenThreadChecker implements Checker{
                 System.out.println(e);
             }
         }
-     }
+    }
 }

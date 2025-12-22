@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -48,7 +49,7 @@ public class RowChecker implements Runnable {
                 }
                 synchronized (errors) {
 
-                    errors.add("Row: " + row
+                    errors.add("Row: " + (row+1)
                             + " has invalid value " + i
                             + " at position " + vArrayList.toString() + " .");
                 }

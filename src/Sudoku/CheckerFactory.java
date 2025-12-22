@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -13,11 +14,11 @@ public class CheckerFactory {
     {  if(mode.equals("0"))
         return new SequentialChecker();
     else if (mode.equals("3"))
-       {return new ThreeThreadChecker();}
-     else if (mode.equals("27"))
-            return new TwentySevenThreadChecker();
-    
-    return null;
+    {return new ThreeThreadChecker();}
+    else if (mode.equals("27"))
+        return new TwentySevenThreadChecker();
+
+        return null;
     }
-    
+
 }
