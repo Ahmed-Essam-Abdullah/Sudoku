@@ -3,21 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package Sudoku;
+import GUI.UserAction;
+import java.io.IOException;
 
-/**
- *
- * @author AliAl
- */
+
 public interface Controllable {
     
-    bool[] getCatalog();
+    boolean[] getCatalog();
 
     int[][] getGame(char level) throws NotFoundException;
 
     void driveGames(String sourcePath) throws SolutionInvalidException;
 // A boolean array which says if a specifc cell is correct or invalid
 
-    bool[][] verifyGame(int[][] game);
+    boolean[][] verifyGame(int[][] game);
 // contains the cell x, y and solution for each missing cell
 
     int[][] solveGame(int[][] game) throws InvalidGame;

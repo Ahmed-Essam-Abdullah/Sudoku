@@ -4,34 +4,44 @@
  */
 package Sudoku;
 
+import GUI.UserAction;
 import java.io.IOException;
-import javaapplication٧.Controllable;
+
 
 /**
  *
  * @author AliAl
  */
+
 public class View implements Controllable{
+    private ControllerFecadeAdapter controllerFecadeAdapter=new ControllerFecadeAdapter();
     public boolean[] getCatalog(){
+      boolean[] catalog =controllerFecadeAdapter.getCatalog();
         return null;
-    };
+    }
 
     @Override
     public int[][] getGame(char level) throws NotFoundException{
-    
-    
-    return null};
-
-    void driveGames(String sourcePath) throws SolutionInvalidException;
-// A boolean array which says if a specifc cell is correct or invalid
-
-    bool[][] verifyGame(int[][] game);
-// contains the cell x, y and solution for each missing cell
-
-    int[][] solveGame(int[][] game) throws InvalidGame;
-// Logs the user action
+    int [][] game =controllerFecadeAdapter.getGame(level);
+    return game;}
 
     @Override
-    void logUserAction(UserAction userAction) throws IOException{};
+    public void driveGames(String sourcePath) throws SolutionInvalidException
+    {controllerFecadeAdapter.driveGames(sourcePath);}
+
+    @Override
+    public boolean[][] verifyGame(int[][] game)
+    {boolean [][] result =controllerFecadeAdapter.verifyGame(game);
+    return result;
+}
+
+    @Override
+    public int[][] solveGame(int[][] game) throws InvalidGame
+    {int [][]solution=controllerFecadeAdapter.solveGame(game);
+    return solution;}
+
+    @Override
+    public void logUserAction(UserAction userAction) throws IOException{
+    controllerFecadeAdapter.logUserAction(userAction);}
     
 }

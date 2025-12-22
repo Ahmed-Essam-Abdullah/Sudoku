@@ -135,4 +135,21 @@ public class SudokuVerifier {
                 box[k++] = getValue(b, i, j, e, p);
         return box;
     }
+    public  static boolean isDuplicateInAny(int[][] board, int r, int c) {
+    int val = board[r][c];
+
+    for (int i = 0; i < 9; i++) {
+        if (i != c && board[r][i] == val) return true;
+        if (i != r && board[i][c] == val) return true;
+    }
+
+    int startR = (r / 3) * 3;
+    int startC = (c / 3) * 3;
+    for (int i = startR; i < startR + 3; i++) {
+        for (int j = startC; j < startC + 3; j++) {
+            if ((i != r || j != c) && board[i][j] == val) return true;
+        }
+    }
+    return false;
+}
 }

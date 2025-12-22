@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import Sudoku.Game;
 
 /**
  *
@@ -18,9 +19,10 @@ import java.util.List;
  */
 public class UndoManager {
      private final Path logPath;
-     
-     public UndoManager(String incompleteFolderPath) {
-        this.logPath = Paths.get(incompleteFolderPath, "log.txt");
+     private static final String ROOT = "storage";
+     private static final String INCOMPLETE = ROOT + "/incomplete";
+     public UndoManager() {
+        this.logPath = Paths.get(INCOMPLETE, "log.txt");
     }
      
       public void logMove(String moveEntry) throws IOException {
@@ -46,7 +48,7 @@ public class UndoManager {
         int y = Integer.parseInt(parts[1].trim());
         int prev = Integer.parseInt(parts[3].trim());
 
-        game.board[x][y] = prev;
+        game.getBoard()[x][y] = prev;
         
         lines.remove(lines.size() - 1);
         Files.write(logPath, lines);
